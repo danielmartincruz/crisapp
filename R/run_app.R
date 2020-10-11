@@ -8,6 +8,9 @@
 run_app <- function(
   ...
 ) {
+  
+  # data <- data_formation() 
+  
   with_golem_options(
     app = shinyApp(
       ui = app_ui, 
