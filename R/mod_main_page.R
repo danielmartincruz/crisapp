@@ -10,7 +10,7 @@
 #' @import shinydashboard
 #' @import shinydashboardPlus
 #' @import shinyWidgets
-#' 
+#' @import magick
 mod_main_page_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -31,11 +31,10 @@ mod_main_page_ui <- function(id){
              
       )),
     fluidRow(
-      column(6, 
-             imageOutput(ns("img"))
-# tags$image(src="Rlogo.jpg")             
-             
-             
+      column(8, 
+             box(title = "2D",
+                 status = "warning", solidHeader = TRUE, collapsible = TRUE,
+                 mod_gif_display_ui(ns("gif_display_ui_1"))             )
       ))
   )
 }
@@ -45,13 +44,25 @@ mod_main_page_ui <- function(id){
 #' @noRd 
 mod_main_page_server <- function(input, output, session){
   ns <- session$ns
-  
-  output$img <- renderImage({
-    my_gif <- 
-      list(src = "/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/Rlogo.jpg", contentType = "image/jpeg")
-    browser()
-    return(my_gif)
-  }, deleteFile = FALSE)
+  callModule(mod_gif_display_server, "gif_display_ui_1")
+  # loaded_image <- reactive({
+  #   get_gif("/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/img/2d")
+  # })
+  # 
+  # output$current_image_plot <- renderImage({
+  #   earth <- loaded_image()
+  #   # earth <- image_read("https://jeroen.github.io/images/earth.gif") %>%
+  #   #   image_scale("200x") %>%
+  #   #   image_quantize(128)
+  #   anim_save("outfile.gif", earth) # New
+  #   
+  #   list(src = "outfile.gif",
+  #        contentType = 'image/gif'
+  #        # width = 400,
+  #        # height = 300,
+  #        # alt = "This is alternate text"
+  #   )
+  # })
 }
 
 ## To be copied in the UI

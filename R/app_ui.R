@@ -18,7 +18,7 @@ app_ui <- function(time_preprocessing, commission) {
                         titleWidth = 600,
                         tags$li(class="dropdown",tags$a(href="https://www.instagram.com/cristinajimenez_artist/", icon("instagram"), "Instagram", target="_blank")),
                         tags$li(class="dropdown",tags$a(href="https://www.fiverr.com/crisjimenez07" ,icon("fonticons"), "Fiverr", target="_blank")),
-                        tags$li(class="dropdown",tags$a(href="https://www.artstation.com/cris_jimenez_art", icon("artstation"), "Source Code", target="_blank"))
+                        tags$li(class="dropdown",tags$a(href="https://www.artstation.com/cris_jimenez_art", icon("artstation"), "Art Station", target="_blank"))
                         
                         
         ),
