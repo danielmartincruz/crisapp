@@ -7,5 +7,7 @@
 app_server <- function( input, output, session ) {
   # List the first level callModules here
   callModule(mod_main_page_server, "main_page_ui_1")
+  callModule(mod_samples_server, "samples_ui_1")
+  callModule(mod_samples_server, "samples_ui_2")
   
 }

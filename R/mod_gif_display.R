@@ -6,11 +6,19 @@
 #'
 #' @noRd 
 #'
+#' @import magick
+#' @import gganimate
 #' @importFrom shiny NS tagList 
-mod_gif_display_ui <- function(id){
+mod_gif_display_ui <- function(id, title){
   ns <- NS(id)
   tagList(
-    imageOutput(ns("current_image_plot"))
+    box(
+
+        solidHeader = FALSE, 
+      a(imageOutput(ns("current_image_plot")), onclick = paste0("openTab('",title,"')"), href="#")
+        
+    )
+    
     
   )
 }
@@ -18,18 +26,15 @@ mod_gif_display_ui <- function(id){
 #' gif_display Server Function
 #'
 #' @noRd 
-mod_gif_display_server <- function(input, output, session){
+mod_gif_display_server <- function(input, output, session, path){
   ns <- session$ns
   loaded_image <- reactive({
-    get_gif("/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/img/2d")
+    get_gif(path)
   })
   
   output$current_image_plot <- renderImage({
-    earth <- loaded_image()
-    # earth <- image_read("https://jeroen.github.io/images/earth.gif") %>%
-    #   image_scale("200x") %>%
-    #   image_quantize(128)
-    anim_save("outfile.gif", earth) # New
+
+    anim_save("outfile.gif", loaded_image()) # New
     
     list(src = "outfile.gif",
          contentType = 'image/gif'
@@ -37,7 +42,7 @@ mod_gif_display_server <- function(input, output, session){
          # height = 300,
          # alt = "This is alternate text"
     )
-  })
+  } ,deleteFile = FALSE)
 }
     
 ## To be copied in the UI

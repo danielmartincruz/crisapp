@@ -31,10 +31,12 @@ mod_main_page_ui <- function(id){
              
       )),
     fluidRow(
-      column(8, 
-             box(title = "2D",
-                 status = "warning", solidHeader = TRUE, collapsible = TRUE,
-                 mod_gif_display_ui(ns("gif_display_ui_1"))             )
+      column(8, offset = 2,
+             mod_gif_display_ui(ns("gif_display_ui_1"), title = "2d"),
+             mod_gif_display_ui(ns("gif_display_ui_2"), title = "3d")
+
+             
+
       ))
   )
 }
@@ -44,30 +46,7 @@ mod_main_page_ui <- function(id){
 #' @noRd 
 mod_main_page_server <- function(input, output, session){
   ns <- session$ns
-  callModule(mod_gif_display_server, "gif_display_ui_1")
-  # loaded_image <- reactive({
-  #   get_gif("/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/img/2d")
-  # })
-  # 
-  # output$current_image_plot <- renderImage({
-  #   earth <- loaded_image()
-  #   # earth <- image_read("https://jeroen.github.io/images/earth.gif") %>%
-  #   #   image_scale("200x") %>%
-  #   #   image_quantize(128)
-  #   anim_save("outfile.gif", earth) # New
-  #   
-  #   list(src = "outfile.gif",
-  #        contentType = 'image/gif'
-  #        # width = 400,
-  #        # height = 300,
-  #        # alt = "This is alternate text"
-  #   )
-  # })
+  callModule(mod_gif_display_server, "gif_display_ui_1", path = "/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/img/2d")
+  callModule(mod_gif_display_server, "gif_display_ui_2", path = "/Users/danielmartincruz/Documents/cris.pmct/inst/app/www/img/3d")
+
 }
-
-## To be copied in the UI
-# mod_main_page_ui("main_page_ui_1")
-
-## To be copied in the server
-# callModule(mod_main_page_server, "main_page_ui_1")
-

@@ -1,31 +1,97 @@
-library(gapminder)
-library(ggplot2)
-library(shiny)
-library(gganimate)
-theme_set(theme_bw())
+library(shinyWidgets)
 
-ui <- basicPage(
-  imageOutput("plot1"))
-
-server <- function(input, output) {
-  output$plot1 <- renderImage({
-    # A temp file to save the output.
-    # This file will be removed later by renderImage
-    outfile <- tempfile(fileext='.gif')
+if (interactive()) {
+  
+  ### Uniform color background :
+  
+  library(shiny)
+  library(shinyWidgets)
+  
+  ui <- fluidPage(
+    tags$h2("Change shiny app background"),
+    setBackgroundColor("ghostwhite")
+  )
+  
+  server <- function(input, output, session) {
     
-    # now make the animation
-    p = ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, 
-                              color = continent)) + geom_point() + scale_x_log10() +
-      transition_time(year) # New
-    browser()
-    anim_save("outfile.gif", animate(p)) # New
+  }
+  
+  shinyApp(ui, server)
+  
+  
+  ### linear gradient background :
+  
+  library(shiny)
+  library(shinyWidgets)
+  
+  ui <- fluidPage(
     
-    # Return a list containing the filename
-    list(src = "outfile.gif",
-         contentType = 'image/gif'
-         # width = 400,
-         # height = 300,
-         # alt = "This is alternate text"
-    )}, deleteFile = TRUE)}
-
-shinyApp(ui, server)
+    # use a gradient in background
+    setBackgroundColor(
+      color = c("#F7FBFF", "#2171B5"),
+      gradient = "linear",
+      direction = "bottom"
+    ),
+    
+    titlePanel("Hello Shiny!"),
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput("obs",
+                    "Number of observations:",
+                    min = 0,
+                    max = 1000,
+                    value = 500)
+      ),
+      mainPanel(
+        plotOutput("distPlot")
+      )
+    )
+  )
+  
+  server <- function(input, output, session) {
+    output$distPlot <- renderPlot({
+      hist(rnorm(input$obs))
+    })
+  }
+  
+  shinyApp(ui, server)
+  
+  
+  ### radial gradient background :
+  
+  library(shiny)
+  library(shinyWidgets)
+  
+  ui <- fluidPage(
+    
+    # use a gradient in background
+    setBackgroundColor(
+      color = c("#F7FBFF", "#2171B5"),
+      gradient = "radial",
+      direction = c("top", "left")
+    ),
+    
+    titlePanel("Hello Shiny!"),
+    sidebarLayout(
+      sidebarPanel(
+        sliderInput("obs",
+                    "Number of observations:",
+                    min = 0,
+                    max = 1000,
+                    value = 500)
+      ),
+      mainPanel(
+        plotOutput("distPlot")
+      )
+    )
+  )
+  
+  server <- function(input, output, session) {
+    output$distPlot <- renderPlot({
+      hist(rnorm(input$obs))
+    })
+  }
+  
+  shinyApp(ui, server)
+  
+}

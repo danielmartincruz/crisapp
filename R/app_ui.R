@@ -27,13 +27,38 @@ app_ui <- function(time_preprocessing, commission) {
         shinydashboard::sidebarMenu(
           # Setting id makes input$tabs give the tabName of currently-selected tab
           id = "tabs",
-          shinydashboard::menuItem("main", tabName = "mn", icon = icon("user-circle"))
+          shinydashboard::menuItem("main", tabName = "mn", icon = icon("user-circle")),
+          shinydashboard::menuItem("2d", tabName = "2d", icon = icon("edit")),
+          shinydashboard::menuItem("3d", tabName = "3d", icon = icon("edit"))
+          
+          
 )
       ),
       # Show the appropriate tab's content in the main body of our dashboard when we select it
       body = shinydashboard::dashboardBody(
+        tags$script(HTML("
+        var openTab = function(tabName){
+          $('a', $('.sidebar')).each(function() {
+            if(this.getAttribute('data-value') == tabName) {
+              this.click()
+            };
+          });
+        }
+      ")),
+        tags$head(tags$style(HTML('
+                                /* body */
+                                .content-wrapper, .right-side {
+                                background-color: #FFFFFF;
+                                }
+
+                                '))),
         shinydashboard::tabItems(
-          shinydashboard::tabItem("mn", mod_main_page_ui("main_page_ui_1"))
+          
+          shinydashboard::tabItem("mn", mod_main_page_ui("main_page_ui_1")),
+          shinydashboard::tabItem("2d", mod_samples_ui("samples_ui_1")),
+          shinydashboard::tabItem("3d", mod_samples_ui("samples_ui_2"))
+          
+          
         ) 
       ),
       title = "Artist book"

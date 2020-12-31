@@ -20,6 +20,7 @@
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "main_page" ) # Name of the module
+golem::add_module( name = "samples" ) # Name of the module
 golem::add_module( name = "gif_display" ) # Name of the module
 
 ## Add helper functions ----
